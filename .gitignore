@@ -1,0 +1,18 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/
+dist/
+
+# MinIO Data
+minio_data/
+
+# Environment Files
+backend/.env
+frontend/.env
+
+# Logs
+*.log

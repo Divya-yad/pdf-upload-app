@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=password
+    volumes:
+      - ./minio_data:/data
+    command: server /data --console-address ":9001"
+  fastapi:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=admin
+      - MINIO_SECRET_KEY=password
+      - MINIO_BUCKET=uploads
+      - MINIO_USE_SSL=false
+    depends_on:
+      - minio
